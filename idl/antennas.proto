@@ -7,18 +7,18 @@ option go_package = "antennas";
 import "api.proto";
 import "common.proto";
 
-message getAntennasReq {
+message getAntennasRequest {
     
 }
 
-message getAntennasResp {
+message getAntennasResponse {
     int32 status_code = 1;
     string status_msg = 2;
     repeated common.Antennas data = 3;
 }
 
 service AntennasService {
-    rpc GetAntennas(getAntennasReq) returns (getAntennasResp) {
+    rpc GetAntennas(getAntennasRequest) returns (getAntennasResponse) {
         option (api.get) = "/antennas/getAntennas";
     }
 }

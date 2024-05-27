@@ -17,11 +17,11 @@ import (
 // @router /getAntennas [GET]
 func GetAntennas(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req antennas.GetAntennasReq
+	var req antennas.GetAntennasRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		resp := utils.BuildBaseResp(err)
-		c.JSON(consts.StatusOK, antennas.GetAntennasResp{
+		c.JSON(consts.StatusOK, antennas.GetAntennasResponse{
 			StatusCode: resp.StatusCode,
 			StatusMsg:  resp.StatusMsg,
 		})
@@ -31,7 +31,7 @@ func GetAntennas(ctx context.Context, c *app.RequestContext) {
 	data, err := service.NewAntennaService(ctx, c).GetAntennas()
 
 	resp := utils.BuildBaseResp(err)
-	c.JSON(consts.StatusOK, antennas.GetAntennasResp{
+	c.JSON(consts.StatusOK, antennas.GetAntennasResponse{
 		StatusCode: resp.StatusCode,
 		StatusMsg:  resp.StatusMsg,
 		Data:       data,
