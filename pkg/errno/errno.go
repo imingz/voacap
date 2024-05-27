@@ -36,7 +36,7 @@ func ConvertErr(err error) ErrNo {
 }
 
 const (
-	SuccessCode    = 0
+	SuccessCode    = 200
 	ServiceErrCode = iota + 10000
 	ParamErrCode
 )

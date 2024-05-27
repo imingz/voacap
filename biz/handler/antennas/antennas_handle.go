@@ -22,8 +22,8 @@ func GetAntennas(ctx context.Context, c *app.RequestContext) {
 	if err != nil {
 		resp := utils.BuildBaseResp(err)
 		c.JSON(consts.StatusOK, antennas.GetAntennasResponse{
-			StatusCode: resp.StatusCode,
-			StatusMsg:  resp.StatusMsg,
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
 		})
 		return
 	}
@@ -32,9 +32,9 @@ func GetAntennas(ctx context.Context, c *app.RequestContext) {
 
 	resp := utils.BuildBaseResp(err)
 	c.JSON(consts.StatusOK, antennas.GetAntennasResponse{
-		StatusCode: resp.StatusCode,
-		StatusMsg:  resp.StatusMsg,
-		Data:       data,
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+		Data: data,
 	})
 }
 
@@ -47,8 +47,8 @@ func AddAntenna(ctx context.Context, c *app.RequestContext) {
 	if err != nil {
 		resp := utils.BuildBaseResp(err)
 		c.JSON(consts.StatusOK, antennas.AddAntennaResponse{
-			StatusCode: resp.StatusCode,
-			StatusMsg:  resp.StatusMsg,
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
 		})
 		return
 	}
@@ -57,7 +57,7 @@ func AddAntenna(ctx context.Context, c *app.RequestContext) {
 
 	resp := utils.BuildBaseResp(err)
 	c.JSON(consts.StatusOK, antennas.AddAntennaResponse{
-		StatusCode: resp.StatusCode,
-		StatusMsg:  resp.StatusMsg,
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
 	})
 }

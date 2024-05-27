@@ -12,8 +12,8 @@ message getAntennasRequest {
 }
 
 message getAntennasResponse {
-    int32 status_code = 1;
-    string status_msg = 2;
+    int32 code = 1;
+    string msg = 2;
     repeated common.Antennas data = 3;
 }
 
@@ -26,8 +26,8 @@ message addAntennaRequest {
 }
 
 message addAntennaResponse {
-    int32 status_code = 1;
-    string status_msg = 2;
+    int32 code = 1;
+    string msg = 2;
 }
 
 service AntennasService {
