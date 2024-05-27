@@ -68,3 +68,8 @@ func CreateLink(link *Link) error {
 func UpdateLinkById(link *Link) error {
 	return DB.Save(link).Error
 }
+
+// DeleteLinkById 删除
+func DeleteLinkById(linkID int64) error {
+	return DB.Delete(&Link{}, linkID).Error
+}

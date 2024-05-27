@@ -83,3 +83,26 @@ func UpdateLinkById(ctx context.Context, c *app.RequestContext) {
 		Msg:  resp.StatusMsg,
 	})
 }
+
+// DeleteLinkById .
+// @router /links/deleteLinkById [POST]
+func DeleteLinkById(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req link.DeleteLinkByIdRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, link.DeleteLinkByIdResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	err = service.NewLinkService(ctx, c).DeleteLinkById(&req)
+	resp := utils.BuildBaseResp(err)
+	c.JSON(consts.StatusOK, link.DeleteLinkByIdResponse{
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+	})
+}

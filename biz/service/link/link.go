@@ -193,3 +193,8 @@ func (s *LinkService) UpdateLinkById(req *link.UpdateLinkByIdRequest) error {
 	}
 	return db.UpdateLinkById(l)
 }
+
+// DeleteLinkById 删除链路信息
+func (s *LinkService) DeleteLinkById(req *link.DeleteLinkByIdRequest) error {
+	return db.DeleteLinkById(req.LinkID)
+}

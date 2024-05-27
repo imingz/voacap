@@ -30,3 +30,8 @@ func _updatelinkbyidMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _deletelinkbyidMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

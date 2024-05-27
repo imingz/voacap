@@ -76,6 +76,15 @@ message updateLinkByIdResponse {
     string msg = 2;
 }
 
+message deleteLinkByIdRequest {
+    int64 linkID = 1;
+}
+
+message deleteLinkByIdResponse {
+    int32 code = 1;
+    string msg = 2;
+}
+
 service LinkService {
     rpc GetLinks(getLinksRequest) returns (getLinksResponse) {
         option (api.get) = "/links/getLinks";
@@ -87,5 +96,9 @@ service LinkService {
 
     rpc updateLinkById(updateLinkByIdRequest) returns (updateLinkByIdResponse) {
         option (api.post) = "/links/updateLinkById";
+    };
+
+    rpc deleteLinkById(deleteLinkByIdRequest) returns (deleteLinkByIdResponse) {
+        option (api.post) = "/links/deleteLinkById";
     };
 }

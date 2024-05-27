@@ -20,6 +20,7 @@ func Register(r *server.Hertz) {
 	{
 		_links := root.Group("/links", _linksMw()...)
 		_links.POST("/addLink", append(_addlinkMw(), link.AddLink)...)
+		_links.POST("/deleteLinkById", append(_deletelinkbyidMw(), link.DeleteLinkById)...)
 		_links.GET("/getLinks", append(_getlinksMw(), link.GetLinks)...)
 		_links.POST("/updateLinkById", append(_updatelinkbyidMw(), link.UpdateLinkById)...)
 	}
