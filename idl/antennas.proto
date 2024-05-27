@@ -17,9 +17,26 @@ message getAntennasResponse {
     repeated common.Antennas data = 3;
 }
 
+
+message addAntennaRequest {
+    string aname = 2;
+    string afile = 3;
+    int64 afbandMin = 4;
+    int64 afbandMax = 5;
+}
+
+message addAntennaResponse {
+    int32 status_code = 1;
+    string status_msg = 2;
+}
+
 service AntennasService {
     rpc GetAntennas(getAntennasRequest) returns (getAntennasResponse) {
         option (api.get) = "/antennas/getAntennas";
+    }
+
+    rpc AddAntenna(addAntennaRequest) returns (addAntennaResponse) {
+        option (api.post) = "/antennas/addAntenna";
     }
 }
 

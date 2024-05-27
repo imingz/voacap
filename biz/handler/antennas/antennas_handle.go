@@ -37,3 +37,27 @@ func GetAntennas(ctx context.Context, c *app.RequestContext) {
 		Data:       data,
 	})
 }
+
+// AddAntenna .
+// @router /antennas/addAntenna [POST]
+func AddAntenna(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req antennas.AddAntennaRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, antennas.AddAntennaResponse{
+			StatusCode: resp.StatusCode,
+			StatusMsg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	err = service.NewAntennaService(ctx, c).AddAntennas(req)
+
+	resp := utils.BuildBaseResp(err)
+	c.JSON(consts.StatusOK, antennas.AddAntennaResponse{
+		StatusCode: resp.StatusCode,
+		StatusMsg:  resp.StatusMsg,
+	})
+}

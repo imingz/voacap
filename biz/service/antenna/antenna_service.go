@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"voacap/biz/dal/db"
+	"voacap/biz/model/antennas"
 	"voacap/biz/model/common"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -18,6 +19,7 @@ func NewAntennaService(ctx context.Context, c *app.RequestContext) *AntennaServi
 	return &AntennaService{ctx: ctx, c: c}
 }
 
+// GetAntennas 获取所有天线信息
 func (s *AntennaService) GetAntennas() ([]*common.Antennas, error) {
 	antennas, err := db.QueryAllAntennas()
 	if err != nil {
@@ -36,4 +38,13 @@ func (s *AntennaService) GetAntennas() ([]*common.Antennas, error) {
 	}
 
 	return result, nil
+}
+
+func (s *AntennaService) AddAntennas(req antennas.AddAntennaRequest) error {
+	return db.AddAntenna(db.Antenna{
+		Aname:     req.Aname,
+		Afile:     req.Afile,
+		AfbandMin: req.AfbandMin,
+		AfbandMax: req.AfbandMax,
+	})
 }

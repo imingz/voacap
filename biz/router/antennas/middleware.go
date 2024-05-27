@@ -20,3 +20,8 @@ func _antennasMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _addantennaMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
