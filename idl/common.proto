@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "common";
+
+message Antennas {
+    int64 antennaID = 1;
+    string aname = 2;
+    string afile = 3;
+    int64 afbandMin = 4;
+    int64 afbandMax = 5;
+}

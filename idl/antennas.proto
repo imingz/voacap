@@ -5,13 +5,16 @@ package antennas;
 option go_package = "antennas";
 
 import "api.proto";
+import "common.proto";
 
 message getAntennasReq {
     
 }
 
 message getAntennasResp {
-
+    int32 status_code = 1;
+    string status_msg = 2;
+    repeated common.Antennas data = 3;
 }
 
 service AntennasService {
