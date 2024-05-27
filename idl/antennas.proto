@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package antennas;
+
+option go_package = "antennas";
+
+import "api.proto";
+
+message getAntennasReq {
+    
+}
+
+message getAntennasResp {
+
+}
+
+service AntennasService {
+    rpc GetAntennas(getAntennasReq) returns (getAntennasResp) {
+        option (api.get) = "/antennas/getAntennas";
+    }
+}
+
