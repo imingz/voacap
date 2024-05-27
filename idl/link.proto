@@ -30,6 +30,52 @@ message addLinkResponse {
     string msg = 2;
 }
 
+message updateLinkByIdRequest {
+    double circuitReliability = 1;
+    string coefficient = 2;
+    string date = 3;
+    int64 ixAntennaFbandMax = 4;
+    int64 ixAntennaFbandMin = 5;
+    string ixAntennaFile = 6;
+    int64 ixAntennaID = 7;
+    string ixAntennaName = 8;
+    double ixPower = 9;
+    int64 ixStationID = 10;
+    double ixStationLat = 11;
+    double ixStationLng = 12;
+    string ixStationName = 13;
+    int64 linkID = 14;
+    string linkType = 15;
+    double noise = 16;
+    int64 rxAntennaFbandMax = 17;
+    int64 rxAntennaFbandMin = 18;
+    string rxAntennaFile = 19;
+    int64 rxAntennaID = 20;
+    string rxAntennaName = 21;
+    int64 rxStationID = 22;
+    double rxStationLat = 23;
+    double rxStationLng = 24;
+    string rxStationName = 25;
+    double SNR = 26;
+    int64 sunspotNum = 27;
+    string timeType = 28;
+    int64 txAntennaFbandMax = 29;
+    int64 txAntennaFbandMin = 30;
+    string txAntennaFile = 31;
+    int64 txAntennaID = 32;
+    string txAntennaName = 33;
+    double txPower = 34;
+    int64 txStationID = 35;
+    double txStationLat = 36;
+    double txStationLng = 37;
+    string txStationName = 38;
+}
+
+message updateLinkByIdResponse {
+    int32 code = 1;
+    string msg = 2;
+}
+
 service LinkService {
     rpc GetLinks(getLinksRequest) returns (getLinksResponse) {
         option (api.get) = "/links/getLinks";
@@ -37,5 +83,9 @@ service LinkService {
 
     rpc AddLink(addLinkRequest) returns (addLinkResponse) {
         option (api.post) = "/links/addLink";
+    };
+
+    rpc updateLinkById(updateLinkByIdRequest) returns (updateLinkByIdResponse) {
+        option (api.post) = "/links/updateLinkById";
     };
 }

@@ -144,3 +144,52 @@ func (s *LinkService) AddLink(req *link.AddLinkRequest) error {
 
 	return db.CreateLink(l)
 }
+
+// UpdateLinkById 更新链路信息
+func (s *LinkService) UpdateLinkById(req *link.UpdateLinkByIdRequest) error {
+	date, err := time.Parse(time.DateOnly, req.Date)
+	if err != nil {
+		return err
+	}
+	l := &db.Link{
+		LinkID:             req.LinkID,
+		LinkType:           req.LinkType,
+		Date:               date,
+		TimeType:           req.TimeType,
+		Coefficient:        req.Coefficient,
+		SunspotNum:         req.SunspotNum,
+		CircuitReliability: req.CircuitReliability,
+		SNR:                req.SNR,
+		Noise:              req.Noise,
+		TxStationID:        req.TxStationID,
+		TxStationName:      req.TxStationName,
+		TxStationLat:       req.TxStationLat,
+		TxStationLng:       req.TxStationLng,
+		TxAntennaID:        req.TxAntennaID,
+		TxAntennaName:      req.TxAntennaName,
+		TxAntennaFile:      req.TxAntennaFile,
+		TxAntennaFbandMin:  req.TxAntennaFbandMin,
+		TxAntennaFbandMax:  req.TxAntennaFbandMax,
+		TxPower:            req.TxPower,
+		RxStationID:        req.RxStationID,
+		RxStationName:      req.RxStationName,
+		RxStationLat:       req.RxStationLat,
+		RxStationLng:       req.RxStationLng,
+		RxAntennaID:        req.RxAntennaID,
+		RxAntennaName:      req.RxAntennaName,
+		RxAntennaFile:      req.RxAntennaFile,
+		RxAntennaFbandMin:  req.RxAntennaFbandMin,
+		RxAntennaFbandMax:  req.RxAntennaFbandMax,
+		IxStationID:        req.IxStationID,
+		IxStationName:      req.IxStationName,
+		IxStationLat:       req.IxStationLat,
+		IxStationLng:       req.IxStationLng,
+		IxAntennaID:        req.IxAntennaID,
+		IxAntennaName:      req.IxAntennaName,
+		IxAntennaFile:      req.IxAntennaFile,
+		IxAntennaFbandMin:  req.IxAntennaFbandMin,
+		IxAntennaFbandMax:  req.IxAntennaFbandMax,
+		IxPower:            req.IxPower,
+	}
+	return db.UpdateLinkById(l)
+}

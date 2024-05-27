@@ -25,3 +25,8 @@ func _addlinkMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _updatelinkbyidMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

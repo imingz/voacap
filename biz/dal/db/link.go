@@ -63,3 +63,8 @@ func QueryAllLink() ([]*Link, error) {
 func CreateLink(link *Link) error {
 	return DB.Create(link).Error
 }
+
+// UpdateLinkById 更新
+func UpdateLinkById(link *Link) error {
+	return DB.Save(link).Error
+}

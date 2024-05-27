@@ -60,3 +60,26 @@ func AddLink(ctx context.Context, c *app.RequestContext) {
 		Msg:  resp.StatusMsg,
 	})
 }
+
+// UpdateLinkById .
+// @router /links/updateLinkById [POST]
+func UpdateLinkById(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req link.UpdateLinkByIdRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, link.UpdateLinkByIdResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	err = service.NewLinkService(ctx, c).UpdateLinkById(&req)
+	resp := utils.BuildBaseResp(err)
+	c.JSON(consts.StatusOK, link.UpdateLinkByIdResponse{
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+	})
+}
