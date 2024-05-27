@@ -23,3 +23,8 @@ func QueryAllStation() ([]*Station, error) {
 	}
 	return stations, nil
 }
+
+// AddStation 添加
+func AddStation(station *Station) error {
+	return DB.Create(station).Error
+}

@@ -16,8 +16,23 @@ message getStationsResponse {
     repeated common.Station data = 3;
 }
 
+message addStationRequest {
+    string Sname = 1;
+    double Slatitude = 2;
+    double Slongitude = 3;
+}
+
+message addStationResponse {
+    int32 code = 1;
+    string msg = 2;
+}
+
 service StationService {
     rpc GetStations(getStationsRequest) returns (getStationsResponse) {
         option (api.get) = "/stations/getStations";
+    };
+
+    rpc AddStation(addStationRequest) returns (addStationResponse) {
+        option (api.post) = "/stations/addStation";
     };
 }

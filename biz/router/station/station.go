@@ -19,6 +19,7 @@ func Register(r *server.Hertz) {
 	root := r.Group("/", rootMw()...)
 	{
 		_stations := root.Group("/stations", _stationsMw()...)
+		_stations.POST("/addStation", append(_addstationMw(), station.AddStation)...)
 		_stations.GET("/getStations", append(_getstationsMw(), station.GetStations)...)
 	}
 }

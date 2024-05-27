@@ -25,3 +25,8 @@ func _stationsMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _addstationMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

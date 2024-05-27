@@ -4,6 +4,7 @@ import (
 	"context"
 	"voacap/biz/dal/db"
 	"voacap/biz/model/common"
+	"voacap/biz/model/station"
 
 	"github.com/cloudwego/hertz/pkg/app"
 )
@@ -36,4 +37,14 @@ func (s *StationService) GetStation() ([]*common.Station, error) {
 	}
 
 	return result, nil
+}
+
+// AddStation 添加站点
+func (s *StationService) AddStation(req *station.AddStationRequest) error {
+	station := &db.Station{
+		Slatitude:  req.Slatitude,
+		Slongitude: req.Slongitude,
+		Sname:      req.Sname,
+	}
+	return db.AddStation(station)
 }

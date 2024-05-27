@@ -37,3 +37,26 @@ func GetStations(ctx context.Context, c *app.RequestContext) {
 		Data: data,
 	})
 }
+
+// AddStation .
+// @router /stations/addStation [POST]
+func AddStation(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req station.AddStationRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, station.AddStationResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	err = service.NewStationService(ctx, c).AddStation(&req)
+	resp := utils.BuildBaseResp(err)
+	c.JSON(consts.StatusOK, station.AddStationResponse{
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+	})
+}
