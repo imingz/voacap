@@ -85,3 +85,27 @@ func UpdateAntennaById(ctx context.Context, c *app.RequestContext) {
 		Msg:  resp.StatusMsg,
 	})
 }
+
+// DeleteAntennaById .
+// @router /antennas/deleteAntennaById [DELETE]
+func DeleteAntennaById(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req antennas.DeleteAntennaByIdRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, antennas.DeleteAntennaByIdResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	err = service.NewAntennaService(ctx, c).DeleteAntennaById(&req)
+
+	resp := utils.BuildBaseResp(err)
+	c.JSON(consts.StatusOK, antennas.DeleteAntennaByIdResponse{
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+	})
+}

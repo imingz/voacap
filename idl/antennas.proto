@@ -42,6 +42,15 @@ message updateAntennaByIdResponse {
     string msg = 2;
 }
 
+message deleteAntennaByIdRequest {
+    int64 antennaId = 1;
+}
+
+message deleteAntennaByIdResponse {
+    int32 code = 1;
+    string msg = 2;
+}
+
 service AntennasService {
     rpc GetAntennas(getAntennasRequest) returns (getAntennasResponse) {
         option (api.get) = "/antennas/getAntennas";
@@ -53,6 +62,10 @@ service AntennasService {
 
     rpc UpdateAntennaById(updateAntennaByIdRequest) returns (updateAntennaByIdResponse) {
         option (api.post) = "/antennas/updateAntennaById";
+    }
+
+    rpc DeleteAntennaById(deleteAntennaByIdRequest) returns (deleteAntennaByIdResponse) {
+        option (api.post) = "/antennas/deleteAntennaById";
     }
 }
 

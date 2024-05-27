@@ -30,3 +30,8 @@ func _updateantennabyidMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _deleteantennabyidMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

@@ -20,6 +20,7 @@ func Register(r *server.Hertz) {
 	{
 		_antennas := root.Group("/antennas", _antennasMw()...)
 		_antennas.POST("/addAntenna", append(_addantennaMw(), antennas.AddAntenna)...)
+		_antennas.POST("/deleteAntennaById", append(_deleteantennabyidMw(), antennas.DeleteAntennaById)...)
 		_antennas.GET("/getAntennas", append(_getantennasMw(), antennas.GetAntennas)...)
 		_antennas.POST("/updateAntennaById", append(_updateantennabyidMw(), antennas.UpdateAntennaById)...)
 	}

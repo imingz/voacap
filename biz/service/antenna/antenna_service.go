@@ -60,3 +60,8 @@ func (s *AntennaService) UpdateAntennaById(req *antennas.UpdateAntennaByIdReques
 		AfbandMax: req.AfbandMax,
 	})
 }
+
+// DeleteAntennaById 删除天线
+func (s *AntennaService) DeleteAntennaById(req *antennas.DeleteAntennaByIdRequest) error {
+	return db.DeleteAntennaById(req.AntennaId)
+}

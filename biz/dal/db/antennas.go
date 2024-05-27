@@ -36,3 +36,8 @@ func AddAntenna(antenna Antenna) error {
 func UpdateAntennaById(antenna Antenna) error {
 	return DB.Save(&antenna).Error
 }
+
+// DeleteAntennaById 删除
+func DeleteAntennaById(antennaID int64) error {
+	return DB.Delete(&Antenna{}, antennaID).Error
+}
