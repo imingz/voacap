@@ -6,8 +6,8 @@ option go_package = "common";
 
 message Antennas {
     int64 antennaID = 1;
-    string aname = 2;
-    string afile = 3;
-    int64 afbandMin = 4;
-    int64 afbandMax = 5;
+    string Aname = 2;
+    string Afile = 3;
+    int64 AfbandMin = 4;
+    int64 AfbandMax = 5;
 }

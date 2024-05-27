@@ -6,11 +6,11 @@ import (
 )
 
 type Antenna struct {
-	AntennaID int64  `json:"antennaID" gorm:"primaryKey"`
-	Aname     string `json:"Aname"`
-	Afile     string `json:"Afile"`
-	AfbandMin int64  `json:"AfbandMin" gorm:"column:AfbandMin"`
-	AfbandMax int64  `json:"AfbandMax" gorm:"column:AfbandMax"`
+	AntennaID int64 `gorm:"column:antennaID"`
+	Aname     string
+	Afile     string
+	AfbandMin int64 `gorm:"column:AfbandMin"`
+	AfbandMax int64 `gorm:"column:AfbandMax"`
 }
 
 func (Antenna) TableName() string {
