@@ -37,3 +37,26 @@ func GetLinks(ctx context.Context, c *app.RequestContext) {
 		Data: data,
 	})
 }
+
+// AddLink .
+// @router /links/addLink [POST]
+func AddLink(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req link.AddLinkRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, link.AddLinkResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	err = service.NewLinkService(ctx, c).AddLink(&req)
+	resp := utils.BuildBaseResp(err)
+	c.JSON(consts.StatusOK, link.AddLinkResponse{
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+	})
+}

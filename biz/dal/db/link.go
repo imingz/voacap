@@ -58,3 +58,8 @@ func QueryAllLink() ([]*Link, error) {
 	}
 	return links, nil
 }
+
+// CreateLink 创建
+func CreateLink(link *Link) error {
+	return DB.Create(link).Error
+}

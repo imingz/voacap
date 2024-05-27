@@ -19,6 +19,27 @@ message Station {
     string Sname = 4;
 }
 
+message InterferOrTransStation {
+    Antenna trans_antenna = 1;
+    double trans_power = 2;
+    Station trans_station = 3;
+}
+
+message RecvStation {
+    Antenna recv_antenna = 1;
+    Station recv_station = 2;
+}
+
+message SysConfig {
+    double circuitReliability = 1;
+    string coefficient = 2;
+    string date = 3;
+    double noise = 4;
+    double SNR = 5;
+    int64 sunspotNum = 6;
+    string timeType = 7;
+}
+
 message Link {
     double circuitReliability = 1;
     string coefficient = 2;

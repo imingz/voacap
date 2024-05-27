@@ -20,3 +20,8 @@ func _getlinksMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _addlinkMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

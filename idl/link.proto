@@ -17,8 +17,25 @@ message getLinksResponse {
     repeated common.Link data = 3;
 }
 
+
+message addLinkRequest {
+    common.SysConfig sysConfig = 1;
+    common.InterferOrTransStation transStation = 2;
+    common.RecvStation recvStation = 3;
+    common.InterferOrTransStation interferStation = 4;
+}
+
+message addLinkResponse {
+    int32 code = 1;
+    string msg = 2;
+}
+
 service LinkService {
     rpc GetLinks(getLinksRequest) returns (getLinksResponse) {
         option (api.get) = "/links/getLinks";
+    };
+
+    rpc AddLink(addLinkRequest) returns (addLinkResponse) {
+        option (api.post) = "/links/addLink";
     };
 }

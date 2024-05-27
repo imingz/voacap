@@ -5,6 +5,7 @@ import (
 	"time"
 	"voacap/biz/dal/db"
 	"voacap/biz/model/common"
+	"voacap/biz/model/link"
 
 	"github.com/cloudwego/hertz/pkg/app"
 )
@@ -71,4 +72,75 @@ func (s *LinkService) GetLinks() ([]*common.Link, error) {
 	}
 
 	return result, nil
+}
+
+// AddLink 添加链路信息
+func (s *LinkService) AddLink(req *link.AddLinkRequest) error {
+	date, err := time.Parse(time.DateOnly, req.SysConfig.Date)
+	if err != nil {
+		return err
+	}
+
+	var linkType string
+
+	if req.InterferStation.TransStation.StationID == -1 {
+		linkType = "干扰"
+	} else {
+		linkType = "通信"
+	}
+
+	l := &db.Link{
+		LinkType: linkType,
+
+		// SysConfig
+		Date:               date,
+		TimeType:           req.SysConfig.TimeType,
+		Coefficient:        req.SysConfig.Coefficient,
+		SunspotNum:         req.SysConfig.SunspotNum,
+		CircuitReliability: req.SysConfig.CircuitReliability,
+		SNR:                req.SysConfig.SNR,
+		Noise:              req.SysConfig.Noise,
+
+		// TransStation
+		TxStationID:   req.TransStation.TransStation.StationID,
+		TxStationLat:  req.TransStation.TransStation.Slatitude,
+		TxStationLng:  req.TransStation.TransStation.Slongitude,
+		TxStationName: req.TransStation.TransStation.Sname,
+
+		TxAntennaID:       req.TransStation.TransAntenna.AntennaID,
+		TxAntennaName:     req.TransStation.TransAntenna.Aname,
+		TxAntennaFile:     req.TransStation.TransAntenna.Afile,
+		TxAntennaFbandMin: req.TransStation.TransAntenna.AfbandMin,
+		TxAntennaFbandMax: req.TransStation.TransAntenna.AfbandMax,
+
+		TxPower: req.TransStation.TransPower,
+
+		// RecvStation
+		RxStationID:   req.RecvStation.RecvStation.StationID,
+		RxStationLat:  req.RecvStation.RecvStation.Slatitude,
+		RxStationLng:  req.RecvStation.RecvStation.Slongitude,
+		RxStationName: req.RecvStation.RecvStation.Sname,
+
+		RxAntennaID:       req.RecvStation.RecvAntenna.AntennaID,
+		RxAntennaName:     req.RecvStation.RecvAntenna.Aname,
+		RxAntennaFile:     req.RecvStation.RecvAntenna.Afile,
+		RxAntennaFbandMin: req.RecvStation.RecvAntenna.AfbandMin,
+		RxAntennaFbandMax: req.RecvStation.RecvAntenna.AfbandMax,
+
+		// InterferStation
+		IxStationID:   req.InterferStation.TransStation.StationID,
+		IxStationLat:  req.InterferStation.TransStation.Slatitude,
+		IxStationLng:  req.InterferStation.TransStation.Slongitude,
+		IxStationName: req.InterferStation.TransStation.Sname,
+
+		IxAntennaID:       req.InterferStation.TransAntenna.AntennaID,
+		IxAntennaName:     req.InterferStation.TransAntenna.Aname,
+		IxAntennaFile:     req.InterferStation.TransAntenna.Afile,
+		IxAntennaFbandMin: req.InterferStation.TransAntenna.AfbandMin,
+		IxAntennaFbandMax: req.InterferStation.TransAntenna.AfbandMax,
+
+		IxPower: req.InterferStation.TransPower,
+	}
+
+	return db.CreateLink(l)
 }
