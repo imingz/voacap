@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package station;
+
+option go_package = "station";
+
+import "api.proto";
+import "common.proto";
+
+message getStationsRequest {
+}
+
+message getStationsResponse {
+    int32 code = 1;
+    string msg = 2;
+    repeated common.Station data = 3;
+}
+
+service StationService {
+    rpc GetStations(getStationsRequest) returns (getStationsResponse) {
+        option (api.get) = "/stations/getStations";
+    };
+}

@@ -8,4 +8,5 @@ const (
 // constants in the project
 const (
 	AntennaTableName = "antenna"
+	StationTableName = "station"
 )

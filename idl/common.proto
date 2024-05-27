@@ -11,3 +11,10 @@ message Antenna {
     int64 AfbandMin = 4;
     int64 AfbandMax = 5;
 }
+
+message Station {
+    int64 stationID = 1;
+    double Slatitude = 2;
+    double Slongitude = 3;
+    string Sname = 4;
+}
