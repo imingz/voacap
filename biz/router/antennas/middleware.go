@@ -25,3 +25,8 @@ func _addantennaMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _updateantennabyidMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

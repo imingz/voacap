@@ -14,9 +14,8 @@ message getAntennasRequest {
 message getAntennasResponse {
     int32 code = 1;
     string msg = 2;
-    repeated common.Antennas data = 3;
+    repeated common.Antenna data = 3;
 }
-
 
 message addAntennaRequest {
     string Aname = 2;
@@ -30,6 +29,19 @@ message addAntennaResponse {
     string msg = 2;
 }
 
+message updateAntennaByIdRequest {
+    int64 antennaId = 1;
+    string Aname = 2;
+    string Afile = 3;
+    int64 AfbandMin = 4;
+    int64 AfbandMax = 5;
+}
+
+message updateAntennaByIdResponse {
+    int32 code = 1;
+    string msg = 2;
+}
+
 service AntennasService {
     rpc GetAntennas(getAntennasRequest) returns (getAntennasResponse) {
         option (api.get) = "/antennas/getAntennas";
@@ -37,6 +49,10 @@ service AntennasService {
 
     rpc AddAntenna(addAntennaRequest) returns (addAntennaResponse) {
         option (api.post) = "/antennas/addAntenna";
+    }
+
+    rpc UpdateAntennaById(updateAntennaByIdRequest) returns (updateAntennaByIdResponse) {
+        option (api.post) = "/antennas/updateAntennaById";
     }
 }
 

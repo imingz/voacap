@@ -20,15 +20,15 @@ func NewAntennaService(ctx context.Context, c *app.RequestContext) *AntennaServi
 }
 
 // GetAntennas 获取所有天线信息
-func (s *AntennaService) GetAntennas() ([]*common.Antennas, error) {
+func (s *AntennaService) GetAntennas() ([]*common.Antenna, error) {
 	antennas, err := db.QueryAllAntennas()
 	if err != nil {
 		return nil, err
 	}
 
-	result := make([]*common.Antennas, len(antennas))
+	result := make([]*common.Antenna, len(antennas))
 	for i, antenna := range antennas {
-		result[i] = &common.Antennas{
+		result[i] = &common.Antenna{
 			AntennaID: antenna.AntennaID,
 			Aname:     antenna.Aname,
 			Afile:     antenna.Afile,
@@ -40,8 +40,20 @@ func (s *AntennaService) GetAntennas() ([]*common.Antennas, error) {
 	return result, nil
 }
 
-func (s *AntennaService) AddAntennas(req antennas.AddAntennaRequest) error {
+// AddAntenna 添加天线
+func (s *AntennaService) AddAntenna(req *antennas.AddAntennaRequest) error {
 	return db.AddAntenna(db.Antenna{
+		Aname:     req.Aname,
+		Afile:     req.Afile,
+		AfbandMin: req.AfbandMin,
+		AfbandMax: req.AfbandMax,
+	})
+}
+
+// UpdateAntennaById 更新天线信息
+func (s *AntennaService) UpdateAntennaById(req *antennas.UpdateAntennaByIdRequest) error {
+	return db.UpdateAntennaById(db.Antenna{
+		AntennaID: req.AntennaId,
 		Aname:     req.Aname,
 		Afile:     req.Afile,
 		AfbandMin: req.AfbandMin,

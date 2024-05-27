@@ -53,10 +53,34 @@ func AddAntenna(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	err = service.NewAntennaService(ctx, c).AddAntennas(req)
+	err = service.NewAntennaService(ctx, c).AddAntenna(&req)
 
 	resp := utils.BuildBaseResp(err)
 	c.JSON(consts.StatusOK, antennas.AddAntennaResponse{
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+	})
+}
+
+// UpdateAntennaById .
+// @router /antennas/updateAntennaById [POST]
+func UpdateAntennaById(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req antennas.UpdateAntennaByIdRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, antennas.UpdateAntennaByIdResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	err = service.NewAntennaService(ctx, c).UpdateAntennaById(&req)
+
+	resp := utils.BuildBaseResp(err)
+	c.JSON(consts.StatusOK, antennas.UpdateAntennaByIdResponse{
 		Code: resp.StatusCode,
 		Msg:  resp.StatusMsg,
 	})
