@@ -33,3 +33,8 @@ func AddStation(station *Station) error {
 func UpdateStationById(station *Station) error {
 	return DB.Save(station).Error
 }
+
+// DeleteStationById 删除
+func DeleteStationById(stationID int64) error {
+	return DB.Delete(&Station{}, stationID).Error
+}

@@ -59,3 +59,8 @@ func (s *StationService) UpdateStationById(req *station.UpdateStationByIdRequest
 	}
 	return db.UpdateStationById(station)
 }
+
+// DeleteStationById 删除站点
+func (s *StationService) DeleteStationById(req *station.DeleteStationByIdRequest) error {
+	return db.DeleteStationById(req.StationID)
+}

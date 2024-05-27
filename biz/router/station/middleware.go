@@ -35,3 +35,8 @@ func _updatestationbyidMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _deletestationbyidMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
