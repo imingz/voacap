@@ -3,11 +3,20 @@
 package main
 
 import (
+	"time"
+	"voacap/biz/dal"
+
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
+func Init() {
+	dal.Init()
+}
+
 func main() {
-	h := server.Default(server.WithHostPorts(":3000"))
+	Init()
+
+	h := server.Default(server.WithHostPorts(":3000"), server.WithExitWaitTime(time.Second))
 
 	register(h)
 	h.Spin()
