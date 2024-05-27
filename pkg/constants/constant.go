@@ -9,4 +9,5 @@ const (
 const (
 	AntennaTableName = "antenna"
 	StationTableName = "station"
+	LinkTableName    = "link"
 )

@@ -20,7 +20,7 @@ func NewStationService(ctx context.Context, c *app.RequestContext) *StationServi
 }
 
 // GetAntennas 获取所有天线信息
-func (s *StationService) GetStation() ([]*common.Station, error) {
+func (s *StationService) GetStations() ([]*common.Station, error) {
 	stations, err := db.QueryAllStation()
 	if err != nil {
 		return nil, err

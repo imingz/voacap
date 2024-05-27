@@ -28,7 +28,7 @@ func GetStations(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	data, err := service.NewStationService(ctx, c).GetStation()
+	data, err := service.NewStationService(ctx, c).GetStations()
 
 	resp := utils.BuildBaseResp(err)
 	c.JSON(consts.StatusOK, station.GetStationsResponse{

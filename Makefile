@@ -13,3 +13,7 @@ hz_update_antennas: # 生成 antennas 代码.
 .PHONY: hz_update_station
 hz_update_station: # 生成 antennas 代码.
 	@hz update -idl idl/station.proto
+
+.PHONY: hz_update_link
+hz_update_link: # 生成 link 代码.
+	@hz update -idl idl/link.proto

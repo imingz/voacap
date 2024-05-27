@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package link;
+
+option go_package = "link";
+
+import "api.proto";
+import "common.proto";
+
+message getLinksRequest {
+
+}
+
+message getLinksResponse {
+    int32 code = 1;
+    string msg = 2;
+    repeated common.Link data = 3;
+}
+
+service LinkService {
+    rpc GetLinks(getLinksRequest) returns (getLinksResponse) {
+        option (api.get) = "/links/getLinks";
+    };
+}
