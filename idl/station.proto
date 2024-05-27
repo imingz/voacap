@@ -27,6 +27,18 @@ message addStationResponse {
     string msg = 2;
 }
 
+message updateStationByIdRequest {
+    int64 stationID = 1;
+    string Sname = 2;
+    double Slatitude = 3;
+    double Slongitude = 4;
+}
+
+message updateStationByIdResponse {
+    int32 code = 1;
+    string msg = 2;
+}
+
 service StationService {
     rpc GetStations(getStationsRequest) returns (getStationsResponse) {
         option (api.get) = "/stations/getStations";
@@ -34,5 +46,9 @@ service StationService {
 
     rpc AddStation(addStationRequest) returns (addStationResponse) {
         option (api.post) = "/stations/addStation";
+    };
+
+    rpc UpdateStationById(updateStationByIdRequest) returns (updateStationByIdResponse) {
+        option (api.post) = "/stations/updateStationById";
     };
 }

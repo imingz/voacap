@@ -48,3 +48,14 @@ func (s *StationService) AddStation(req *station.AddStationRequest) error {
 	}
 	return db.AddStation(station)
 }
+
+// UpdateStationById 更新站点信息
+func (s *StationService) UpdateStationById(req *station.UpdateStationByIdRequest) error {
+	station := &db.Station{
+		StationID:  req.StationID,
+		Slatitude:  req.Slatitude,
+		Slongitude: req.Slongitude,
+		Sname:      req.Sname,
+	}
+	return db.UpdateStationById(station)
+}

@@ -28,3 +28,8 @@ func QueryAllStation() ([]*Station, error) {
 func AddStation(station *Station) error {
 	return DB.Create(station).Error
 }
+
+// UpdateStationById 更新
+func UpdateStationById(station *Station) error {
+	return DB.Save(station).Error
+}
