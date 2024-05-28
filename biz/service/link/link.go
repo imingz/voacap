@@ -89,8 +89,7 @@ func (s *LinkService) AddLink(req *link.AddLinkRequest) error {
 	}
 
 	var linkType string
-
-	if req.InterferStation.TransStation.StationID == -1 {
+	if req.InterferStation.TransStation.StationID != -1 {
 		linkType = "干扰"
 	} else {
 		linkType = "通信"
