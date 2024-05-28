@@ -138,15 +138,19 @@ message CalculateResult {
 
 message SIR {
     double GMT = 1;
-    double SIR = 2;
+    repeated double SIR = 2;
+}
+
+message writeLink2FileData {
+    repeated CalculateResult transLink = 3;
+    repeated CalculateResult interferLink = 4;
+    repeated SIR SIR = 5;
 }
 
 message writeLink2FileResponse {
     int32 code = 1;
     string msg = 2;
-    repeated CalculateResult transLink = 3;
-    repeated CalculateResult interferLink = 4;
-    repeated SIR SIR = 5;
+    writeLink2FileData data = 3;
 }
 
 service LinkService {

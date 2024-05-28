@@ -123,7 +123,7 @@ func WriteLink2File(ctx context.Context, c *app.RequestContext) {
 	}
 
 	s := service.NewLinkService(ctx, c)
-	err = s.WriteLink2File(&req)
+	err = s.WriteLink2File(&req, true)
 	if err != nil {
 		resp := utils.BuildBaseResp(err)
 		c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
@@ -144,13 +144,75 @@ func WriteLink2File(ctx context.Context, c *app.RequestContext) {
 	}
 
 	transLink, err := s.GetLinkResult()
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	var interferLink []*link.CalculateResult
+	var sir []*link.SIR
+
+	if req.LinkType == "干扰" {
+		err = s.WriteLink2File(&req, false)
+		if err != nil {
+			resp := utils.BuildBaseResp(err)
+			c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
+				Code: resp.StatusCode,
+				Msg:  resp.StatusMsg,
+			})
+			return
+		}
+
+		err = s.CalculateLink()
+		if err != nil {
+			resp := utils.BuildBaseResp(err)
+			c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
+				Code: resp.StatusCode,
+				Msg:  resp.StatusMsg,
+			})
+			return
+		}
+
+		interferLink, err = s.GetLinkResult()
+		if err != nil {
+			resp := utils.BuildBaseResp(err)
+			c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
+				Code: resp.StatusCode,
+				Msg:  resp.StatusMsg,
+			})
+			return
+		}
+
+		for i := 0; i < len(transLink); i++ {
+			SIR := make([]float64, 2, 31) // 初始化容量为31，前2个元素为0.0
+			SIR[0] = 0.0
+			SIR[1] = 0.0
+
+			for j := 2; j < 31; j++ {
+				dbuInterfer := interferLink[i].DBU[j]
+				dbuTrans := transLink[i].DBU[j]
+				sir := 0.0
+				if dbuInterfer != 0 {
+					sir = dbuTrans / dbuInterfer
+				}
+				SIR = append(SIR, sir)
+			}
+			sir = append(sir, &link.SIR{GMT: transLink[i].GMT, SIR: SIR})
+		}
+	}
 
 	resp := utils.BuildBaseResp(err)
 	c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
-		Code:         resp.StatusCode,
-		Msg:          resp.StatusMsg,
-		TransLink:    transLink,
-		InterferLink: []*link.CalculateResult{},
-		SIR:          []*link.SIR{},
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+		Data: &link.WriteLink2FileData{
+			TransLink:    transLink,
+			InterferLink: interferLink,
+			SIR:          sir,
+		},
 	})
 }
