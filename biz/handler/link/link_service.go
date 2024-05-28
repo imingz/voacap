@@ -122,13 +122,19 @@ func WriteLink2File(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	var data string
-	data, err = service.NewLinkService(ctx, c).WriteLink2File(&req)
+	err = service.NewLinkService(ctx, c).WriteLink2File(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
 
 	resp := utils.BuildBaseResp(err)
 	c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
 		Code: resp.StatusCode,
 		Msg:  resp.StatusMsg,
-		Data: data,
 	})
 }
