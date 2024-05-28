@@ -9,6 +9,7 @@ import (
 	"voacap/pkg/version"
 
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/spf13/cobra"
 	_ "go.uber.org/automaxprocs"
 )
@@ -35,6 +36,7 @@ func main() {
 
 func run() error {
 	h := server.Default(server.WithHostPorts(":3000"), server.WithExitWaitTime(time.Second))
+	hlog.SetLevel(hlog.LevelInfo)
 
 	register(h)
 	h.Spin()
