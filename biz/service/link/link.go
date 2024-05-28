@@ -269,7 +269,7 @@ func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest, trans bool
 // 调用计算exe进行链路计算
 func (s *LinkService) CalculateLink() error {
 	cmd := exec.Command(utils.GetFilePath("C:\\MyVoacap\\myVOACAP\\CheckMate\\Win32\\MyVoacap.exe"))
-	return cmd.Err
+	return cmd.Run()
 }
 
 // GetLinkResult 获取链路计算结果

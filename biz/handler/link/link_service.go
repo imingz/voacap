@@ -189,8 +189,6 @@ func WriteLink2File(ctx context.Context, c *app.RequestContext) {
 
 		for i := 0; i < len(transLink); i++ {
 			SIR := make([]float64, 2, 31) // 初始化容量为31，前2个元素为0.0
-			SIR[0] = 0.0
-			SIR[1] = 0.0
 
 			for j := 2; j < 31; j++ {
 				dbuInterfer := interferLink[i].DBU[j]
