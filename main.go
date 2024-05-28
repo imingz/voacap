@@ -3,10 +3,13 @@
 package main
 
 import (
+	"os"
 	"time"
 	"voacap/biz/dal"
+	"voacap/pkg/version"
 
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/spf13/cobra"
 	_ "go.uber.org/automaxprocs"
 )
 
@@ -15,10 +18,25 @@ func Init() {
 }
 
 func main() {
+	cmd := &cobra.Command{
+		RunE: func(cmd *cobra.Command, args []string) error {
+			version.PrintAndExitIfRequested()
+			return run()
+		},
+	}
+
+	version.AddFlags(cmd.PersistentFlags())
 	Init()
 
+	if err := cmd.Execute(); err != nil {
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	h := server.Default(server.WithHostPorts(":3000"), server.WithExitWaitTime(time.Second))
 
 	register(h)
 	h.Spin()
+	return nil
 }
