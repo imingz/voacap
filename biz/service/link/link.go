@@ -207,43 +207,60 @@ func (s *LinkService) DeleteLinkById(req *link.DeleteLinkByIdRequest) error {
 
 // WriteLink2File 将链路信息写入文件
 func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest, trans bool) error {
-	lines := make([]string, 23)
-	lines[0] = "COMMENT    Any VOACAP default cards may be placed in the file: VOACAP.DEF"
-	lines[1] = "LINEMAX      55       number of lines-per-page"
-	lines[2] = fmt.Sprintf("COEFFS    %s", req.Coefficient)
-	lines[3] = "TIME          1   24    1    1"
 	date, err := time.Parse(time.DateOnly, req.Date)
 	if err != nil {
 		return err
 	}
-	lines[4] = fmt.Sprintf("MONTH      %d %d.%d", date.Year(), int(date.Month()), date.Day())
-	lines[5] = fmt.Sprintf("SUNSPOT    %d.", req.SunspotNum)
-	if trans {
-		lines[6] = fmt.Sprintf("LABEL     %s, %s", req.TxStationName, req.RxStationName)
-		lines[7] = fmt.Sprintf("CIRCUIT%8.2fN %8.2fE %8.2fN %8.2fE  S     0", req.TxStationLat, req.TxStationLng, req.RxStationLat, req.RxStationLng)
-	} else {
-		lines[6] = fmt.Sprintf("LABEL     %s, %s", req.IxStationName, req.RxStationName)
-		lines[7] = fmt.Sprintf("CIRCUIT%8.2fN %8.2fE %8.2fN %8.2fE  S     0", req.IxStationLat, req.IxStationLng, req.RxStationLat, req.RxStationLng)
+	lines := []string{
+		"COMMENT    Any VOACAP default cards may be placed in the file: VOACAP.DEF",
+		"LINEMAX      55       number of lines-per-page",
+		fmt.Sprintf("COEFFS    %s", req.Coefficient),
+		"TIME          1   24    1    1",
+		fmt.Sprintf("MONTH      %d %d.%d", date.Year(), int(date.Month()), date.Day()),
+		fmt.Sprintf("SUNSPOT    %d.", req.SunspotNum),
 	}
-	lines[8] = fmt.Sprintf("SYSTEM       1. %v. 0.10  %d. %.1f 3.00 0.10", req.Noise, int(req.CircuitReliability*100), req.SNR)
-	lines[9] = "FPROB      1.00 1.00 1.00 0.70"
+
 	if trans {
-		lines[10] = fmt.Sprintf("ANTENNA       1    1    2   30     0.000[samples\\%-13s]106.3    %.4f", req.TxAntennaFile, req.TxPower)
+		lines = append(lines,
+			fmt.Sprintf("LABEL     %s, %s", req.TxStationName, req.RxStationName),
+			fmt.Sprintf("CIRCUIT%8.2fN %8.2fE %8.2fN %8.2fE  S     0", req.TxStationLat, req.TxStationLng, req.RxStationLat, req.RxStationLng),
+		)
 	} else {
-		lines[10] = fmt.Sprintf("ANTENNA       1    1    2   30     0.000[samples\\%-13s]106.3    %.4f", req.IxAntennaFile, req.IxPower)
+		lines = append(lines,
+			fmt.Sprintf("LABEL     %s, %s", req.IxStationName, req.RxStationName),
+			fmt.Sprintf("CIRCUIT%8.2fN %8.2fE %8.2fN %8.2fE  S     0", req.IxStationLat, req.IxStationLng, req.RxStationLat, req.RxStationLng),
+		)
 	}
-	lines[11] = fmt.Sprintf("ANTENNA       2    2    2   30     0.000[samples\\%-13s]289.1    0.0000", req.RxAntennaFile)
-	lines[12] = "FREQUENCY  2.00 3.00 4.00 5.00 6.00 7.00 8.00 9.0010.00 0.00 0.00"
-	lines[13] = "METHOD       26    0"
-	lines[14] = "EXECUTE"
-	lines[15] = "METHOD       30    0"
-	lines[16] = "EXECUTE"
-	lines[17] = "FREQUENCY 11.0012.0013.0014.0015.0016.0017.0018.0019.0020.00 0.00"
-	lines[18] = "EXECUTE"
-	lines[19] = "FREQUENCY 21.0022.0023.0024.0025.0026.0027.0028.0029.0030.00 0.00"
-	lines[20] = "EXECUTE"
-	lines[21] = "QUIT"
-	lines[22] = ""
+
+	lines = append(lines,
+		fmt.Sprintf("SYSTEM       1. %v. 0.10  %d. %.1f 3.00 0.10", req.Noise, int(req.CircuitReliability*100), req.SNR),
+		"FPROB      1.00 1.00 1.00 0.70",
+	)
+
+	if trans {
+		lines = append(lines,
+			fmt.Sprintf("ANTENNA       1    1    2   30     0.000[samples\\%-13s]106.3    %.4f", req.TxAntennaFile, req.TxPower),
+		)
+	} else {
+		lines = append(lines,
+			fmt.Sprintf("ANTENNA       1    1    2   30     0.000[samples\\%-13s]106.3    %.4f", req.IxAntennaFile, req.IxPower),
+		)
+	}
+
+	lines = append(lines,
+		fmt.Sprintf("ANTENNA       2    2    2   30     0.000[samples\\%-13s]289.1    0.0000", req.RxAntennaFile),
+		"FREQUENCY  2.00 3.00 4.00 5.00 6.00 7.00 8.00 9.0010.00 0.00 0.00",
+		"METHOD       26    0",
+		"EXECUTE",
+		"METHOD       30    0",
+		"EXECUTE",
+		"FREQUENCY 11.0012.0013.0014.0015.0016.0017.0018.0019.0020.00 0.00",
+		"EXECUTE",
+		"FREQUENCY 21.0022.0023.0024.0025.0026.0027.0028.0029.0030.00 0.00",
+		"EXECUTE",
+		"QUIT",
+		"",
+	)
 
 	file, err := os.Create(utils.GetFilePath("C:/MyVoacap/myVOACAP/run/voacapx.dat"))
 	if err != nil {
