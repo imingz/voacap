@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 	"time"
 	"voacap/biz/dal/db"
@@ -240,7 +241,7 @@ func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest) error {
 	lines[10] = strings.Replace(lines[10], "1.0000", fmt.Sprintf("%.4f", req.TxPower), 1)
 	lines[11] = strings.Replace(lines[11], "samples\\ant08h20.23  ", "samples\\"+fmt.Sprintf("%-13s", req.RxAntennaFile), 1)
 
-	file, err := os.Create(filePath)
+	file, err := os.Create(utils.GetFilePath("C:/MyVoacap/myVOACAP/run/voacapx.dat"))
 	if err != nil {
 		return err
 	}
@@ -253,4 +254,10 @@ func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest) error {
 	writer.Flush()
 
 	return err
+}
+
+// 调用计算exe进行链路计算
+func (s *LinkService) CalculateLink() error {
+	cmd := exec.Command(utils.GetFilePath("C:\\MyVoacap\\myVOACAP\\CheckMate\\Win32\\MyVoacap.exe"))
+	return cmd.Err
 }
