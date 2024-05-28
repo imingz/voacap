@@ -134,6 +134,7 @@ message CalculateResult {
     repeated double DBU = 5;
     repeated double SDBW = 6;
     repeated double SNR = 7;
+    double FOT = 8;
 }
 
 message SIR {

@@ -286,6 +286,7 @@ func (s *LinkService) GetLinkResult() ([]*link.CalculateResult, error) {
 		if len(columns) >= 7 {
 			GMT, _ := strconv.ParseFloat(columns[0], 64)
 			LMT, _ := strconv.ParseFloat(columns[1], 64)
+			FOT, _ := strconv.ParseFloat(columns[2], 64)
 			MUF, _ := strconv.ParseFloat(columns[5], 64)
 			LUF, _ := strconv.ParseFloat(columns[6], 64)
 			transLink = append(transLink, &link.CalculateResult{
@@ -296,6 +297,7 @@ func (s *LinkService) GetLinkResult() ([]*link.CalculateResult, error) {
 				DBU:  []float64{0.0, 0.0},
 				SDBW: []float64{0.0, 0.0},
 				SNR:  []float64{0.0, 0.0},
+				FOT:  FOT,
 			})
 		}
 	}
