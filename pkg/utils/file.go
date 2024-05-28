@@ -9,7 +9,6 @@ import (
 func GetFilePath(path string) string {
 	if runtime.GOOS == "windows" {
 		return path
-	} else {
-		return "/mnt/e/" + strings.Replace(path[3:], "\\", "/", -1)
 	}
+	return "/mnt/" + strings.ToLower(path[:1]) + "/" + strings.ReplaceAll(path[3:], "\\", "/")
 }
