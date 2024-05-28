@@ -207,43 +207,43 @@ func (s *LinkService) DeleteLinkById(req *link.DeleteLinkByIdRequest) error {
 
 // WriteLink2File 将链路信息写入文件
 func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest, trans bool) error {
-	filePath := utils.GetFilePath("C:/MyVoacap/run/voacapx.dat")
-
-	content, err := os.ReadFile(filePath)
-	if err != nil {
-		return err
-	}
-	lines := strings.Split(string(content), "\n")
-	for i := range lines {
-		lines[i] = strings.TrimSpace(lines[i])
-	}
-
-	lines[2] = strings.Replace(lines[2], "CCIR", req.Coefficient, 1)
+	lines := make([]string, 23)
+	lines[0] = "COMMENT    Any VOACAP default cards may be placed in the file: VOACAP.DEF"
+	lines[1] = "LINEMAX      55       number of lines-per-page"
+	lines[2] = fmt.Sprintf("COEFFS    %s", req.Coefficient)
+	lines[3] = "TIME          1   24    1    1"
 	date, err := time.Parse(time.DateOnly, req.Date)
 	if err != nil {
 		return err
 	}
-	formattedDate := fmt.Sprintf("%d %d.%d", date.Year(), int(date.Month()), date.Day())
-	lines[4] = strings.Replace(lines[4], "2021 4.27", formattedDate, 1)
-	lines[5] = strings.Replace(lines[5], "100", fmt.Sprintf("%v", req.SunspotNum), 1)
-
-	lines[8] = strings.Replace(lines[8], "135", fmt.Sprintf("%v", req.Noise), 1)
-	lines[8] = strings.Replace(lines[8], "90", fmt.Sprintf("%v", int(req.CircuitReliability*100)), 1)
-	lines[8] = strings.Replace(lines[8], "10", fmt.Sprintf("%v", req.SNR), 1)
-
-	lines[11] = strings.Replace(lines[11], "samples\\ant08h20.23  ", "samples\\"+fmt.Sprintf("%-13s", req.RxAntennaFile), 1)
-
+	lines[4] = fmt.Sprintf("MONTH      %d %d.%d", date.Year(), int(date.Month()), date.Day())
+	lines[5] = fmt.Sprintf("SUNSPOT    %d.", req.SunspotNum)
 	if trans {
-		lines[6] = strings.Replace(lines[6], "fuyang, kunshang", fmt.Sprintf("%s, %s", req.TxStationName, req.RxStationName), 1)
-		lines[10] = strings.Replace(lines[10], "samples\\daov.14      ", "samples\\"+fmt.Sprintf("%-13s", req.TxAntennaFile), 1)
-		lines[10] = strings.Replace(lines[10], "1.0000", fmt.Sprintf("%.4f", req.TxPower), 1)
+		lines[6] = fmt.Sprintf("LABEL     %s, %s", req.TxStationName, req.RxStationName)
 		lines[7] = fmt.Sprintf("CIRCUIT%8.2fN %8.2fE %8.2fN %8.2fE  S     0", req.TxStationLat, req.TxStationLng, req.RxStationLat, req.RxStationLng)
 	} else {
-		lines[6] = strings.Replace(lines[6], "fuyang, kunshang", fmt.Sprintf("%s, %s", req.IxStationName, req.RxStationName), 1)
-		lines[10] = strings.Replace(lines[10], "samples\\daov.14      ", "samples\\"+fmt.Sprintf("%-13s", req.IxAntennaFile), 1)
-		lines[10] = strings.Replace(lines[10], "1.0000", fmt.Sprintf("%.4f", req.IxPower), 1)
+		lines[6] = fmt.Sprintf("LABEL     %s, %s", req.IxStationName, req.RxStationName)
 		lines[7] = fmt.Sprintf("CIRCUIT%8.2fN %8.2fE %8.2fN %8.2fE  S     0", req.IxStationLat, req.IxStationLng, req.RxStationLat, req.RxStationLng)
 	}
+	lines[8] = fmt.Sprintf("SYSTEM       1. %v. 0.10  %d. %.1f 3.00 0.10", req.Noise, int(req.CircuitReliability*100), req.SNR)
+	lines[9] = "FPROB      1.00 1.00 1.00 0.70"
+	if trans {
+		lines[10] = fmt.Sprintf("ANTENNA       1    1    2   30     0.000[samples\\%-13s]106.3    %.4f", req.TxAntennaFile, req.TxPower)
+	} else {
+		lines[10] = fmt.Sprintf("ANTENNA       1    1    2   30     0.000[samples\\%-13s]106.3    %.4f", req.IxAntennaFile, req.IxPower)
+	}
+	lines[11] = fmt.Sprintf("ANTENNA       2    2    2   30     0.000[samples\\%-13s]289.1    0.0000", req.RxAntennaFile)
+	lines[12] = "FREQUENCY  2.00 3.00 4.00 5.00 6.00 7.00 8.00 9.0010.00 0.00 0.00"
+	lines[13] = "METHOD       26    0"
+	lines[14] = "EXECUTE"
+	lines[15] = "METHOD       30    0"
+	lines[16] = "EXECUTE"
+	lines[17] = "FREQUENCY 11.0012.0013.0014.0015.0016.0017.0018.0019.0020.00 0.00"
+	lines[18] = "EXECUTE"
+	lines[19] = "FREQUENCY 21.0022.0023.0024.0025.0026.0027.0028.0029.0030.00 0.00"
+	lines[20] = "EXECUTE"
+	lines[21] = "QUIT"
+	lines[22] = ""
 
 	file, err := os.Create(utils.GetFilePath("C:/MyVoacap/myVOACAP/run/voacapx.dat"))
 	if err != nil {
