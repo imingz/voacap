@@ -46,7 +46,7 @@ message updateLinkByIdRequest {
     string ixStationName = 13;
     int64 linkID = 14;
     string linkType = 15;
-    double noise = 16;
+    double noise = 16[(api.vd) = "$ >= 100 && $ <= 150"];
     int64 rxAntennaFbandMax = 17;
     int64 rxAntennaFbandMin = 18;
     string rxAntennaFile = 19;
@@ -56,7 +56,7 @@ message updateLinkByIdRequest {
     double rxStationLat = 23;
     double rxStationLng = 24;
     string rxStationName = 25;
-    double SNR = 26;
+    double SNR = 26[(api.vd) = "$ >= 1 && $ <= 12"];
     int64 sunspotNum = 27;
     string timeType = 28;
     int64 txAntennaFbandMax = 29;
@@ -101,7 +101,7 @@ message writeLink2FileRequest {
     string ixStationName = 13;
     int64 linkID = 14;
     string linkType = 15;
-    double noise = 16;
+    double noise = 16[(api.vd) = "$ >= 100 && $ <= 150"];
     int64 rxAntennaFbandMax = 17;
     int64 rxAntennaFbandMin = 18;
     string rxAntennaFile = 19;
@@ -111,7 +111,7 @@ message writeLink2FileRequest {
     double rxStationLat = 23;
     double rxStationLng = 24;
     string rxStationName = 25;
-    double SNR = 26;
+    double SNR = 26[(api.vd) = "$ >= 1 && $ <= 12"];
     int64 sunspotNum = 27;
     string timeType = 28;
     int64 txAntennaFbandMax = 29;

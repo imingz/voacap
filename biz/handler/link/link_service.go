@@ -195,7 +195,7 @@ func WriteLink2File(ctx context.Context, c *app.RequestContext) {
 				dbuTrans := transLink[i].DBU[j]
 				sir := 0.0
 				if dbuInterfer != 0 {
-					sir = dbuTrans / dbuInterfer
+					sir = dbuInterfer - dbuTrans
 				}
 				SIR = append(SIR, sir)
 			}

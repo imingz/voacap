@@ -4,6 +4,8 @@ package common;
 
 option go_package = "common";
 
+import "api.proto";
+
 message Antenna {
     int64 antennaID = 1;
     string Aname = 2;
@@ -56,7 +58,7 @@ message Link {
     string ixStationName = 13;
     int64 linkID = 14;
     string linkType = 15;
-    double noise = 16;
+    double noise = 16[(api.vd) = "$ >= 100 && $ <= 150"];
     int64 rxAntennaFbandMax = 17;
     int64 rxAntennaFbandMin = 18;
     string rxAntennaFile = 19;
@@ -66,7 +68,7 @@ message Link {
     double rxStationLat = 23;
     double rxStationLng = 24;
     string rxStationName = 25;
-    double SNR = 26;
+    double SNR = 26[(api.vd) = "$ >= 1 && $ <= 12"];
     int64 sunspotNum = 27;
     string timeType = 28;
     int64 txAntennaFbandMax = 29;
