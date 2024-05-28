@@ -8,7 +8,7 @@ build: # 编译服务.
 
 .PHONY: build-windows
 build-windows: # 编译 windows 版本.
-	@GOOS=windows GOARCH=amd64 go build -o output/windows/amd64/voacap_go.exe .
+	@GOOS=windows go build -o output/windows/voacap_go.exe .
 
 .PHONY: tidy
 tidy: # 自动添加/移除依赖包.
