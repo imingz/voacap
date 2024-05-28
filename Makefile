@@ -1,6 +1,10 @@
 .PHONY: run
-run: # 运行服务.
-	@go run .
+run: build # 运行服务.
+	@./output/linux/voacap_go
+
+.PHONY: build
+build: # 编译服务.
+	@go build -o output/linux/voacap_go .
 
 .PHONY: build-windows
 build-windows: # 编译 windows 版本.
