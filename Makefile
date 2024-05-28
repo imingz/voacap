@@ -25,11 +25,11 @@ run: build # 运行服务.
 
 .PHONY: build
 build: tidy # 编译服务.
-	@go build -v -ldflags "$(GO_LDFLAGS)" -o output/linux/voacap_go .
+	@go build -v -ldflags "$(GO_LDFLAGS)" -o output/linux/voacap_go ./cmd/voacap.go
 
 .PHONY: build-windows
 build-windows: tidy # 编译 windows 版本.
-	@GOOS=windows go build -v -ldflags "$(GO_LDFLAGS)" -o output/windows/voacap_go.exe .
+	@GOOS=windows go build -v -ldflags "$(GO_LDFLAGS)" -o output/windows/voacap_go.exe ./cmd/voacap.go
 
 .PHONY: tidy
 tidy: # 自动添加/移除依赖包.
