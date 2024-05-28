@@ -1,7 +1,7 @@
-## 指定应用使用的 version 包，会通过 `-ldflags -X` 向该包中指定的变量注入值
+# 指定应用使用的 version 包，会通过 `-ldflags -X` 向该包中指定的变量注入值
 VERSION_PACKAGE=voacap/cmd
 
-## 定义 VERSION 语义化版本号
+# 定义 VERSION 语义化版本号
 ifeq ($(origin VERSION), undefined)
 VERSION := $(shell git describe --tags --always --match='v*')
 endif
