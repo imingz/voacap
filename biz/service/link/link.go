@@ -272,9 +272,8 @@ func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest, trans bool
 	for _, line := range lines {
 		fmt.Fprintln(writer, line)
 	}
-	writer.Flush()
 
-	return err
+	return writer.Flush()
 }
 
 // 调用计算exe进行链路计算
