@@ -35,3 +35,8 @@ func _deletelinkbyidMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _writelink2fileMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

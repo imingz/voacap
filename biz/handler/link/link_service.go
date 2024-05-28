@@ -106,3 +106,29 @@ func DeleteLinkById(ctx context.Context, c *app.RequestContext) {
 		Msg:  resp.StatusMsg,
 	})
 }
+
+// WriteLink2File .
+// @router /links/writeLink2File [POST]
+func WriteLink2File(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req link.WriteLink2FileRequest
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	var data string
+	data, err = service.NewLinkService(ctx, c).WriteLink2File(&req)
+
+	resp := utils.BuildBaseResp(err)
+	c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
+		Code: resp.StatusCode,
+		Msg:  resp.StatusMsg,
+		Data: data,
+	})
+}

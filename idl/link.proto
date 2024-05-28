@@ -85,6 +85,15 @@ message deleteLinkByIdResponse {
     string msg = 2;
 }
 
+message writeLink2FileRequest {
+}
+
+message writeLink2FileResponse {
+    int32 code = 1;
+    string msg = 2;
+    string data = 3;
+}
+
 service LinkService {
     rpc GetLinks(getLinksRequest) returns (getLinksResponse) {
         option (api.get) = "/links/getLinks";
@@ -100,5 +109,9 @@ service LinkService {
 
     rpc deleteLinkById(deleteLinkByIdRequest) returns (deleteLinkByIdResponse) {
         option (api.post) = "/links/deleteLinkById";
+    };
+
+    rpc writeLink2File(writeLink2FileRequest) returns (writeLink2FileResponse) {
+        option (api.post) = "/links/writeLink2File";
     };
 }

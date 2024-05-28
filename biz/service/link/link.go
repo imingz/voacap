@@ -2,10 +2,12 @@ package service
 
 import (
 	"context"
+	"os"
 	"time"
 	"voacap/biz/dal/db"
 	"voacap/biz/model/common"
 	"voacap/biz/model/link"
+	"voacap/pkg/utils"
 
 	"github.com/cloudwego/hertz/pkg/app"
 )
@@ -197,4 +199,11 @@ func (s *LinkService) UpdateLinkById(req *link.UpdateLinkByIdRequest) error {
 // DeleteLinkById 删除链路信息
 func (s *LinkService) DeleteLinkById(req *link.DeleteLinkByIdRequest) error {
 	return db.DeleteLinkById(req.LinkID)
+}
+
+// WriteLink2File 将链路信息写入文件
+func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest) (string, error) {
+	content, err := os.ReadFile(utils.GetFilePath("E:\\11\\test.txt"))
+
+	return string(content), err
 }
