@@ -126,10 +126,27 @@ message writeLink2FileRequest {
     string txStationName = 38;
 }
 
+message CalculateResult {
+    double GMT = 1;
+    double LMT = 2;
+    double MUF = 3;
+    double LUF = 4;
+    repeated double DBU = 5;
+    repeated double SDBW = 6;
+    repeated double SNR = 7;
+}
+
+message SIR {
+    double GMT = 1;
+    double SIR = 2;
+}
+
 message writeLink2FileResponse {
     int32 code = 1;
     string msg = 2;
-    string data = 3;
+    repeated CalculateResult transLink = 3;
+    repeated CalculateResult interferLink = 4;
+    repeated SIR SIR = 5;
 }
 
 service LinkService {

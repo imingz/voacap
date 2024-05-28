@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 	"time"
 	"voacap/biz/dal/db"
@@ -228,10 +229,10 @@ func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest) error {
 	lines[5] = strings.Replace(lines[5], "100", fmt.Sprintf("%v", req.SunspotNum), 1)
 	lines[6] = strings.Replace(lines[6], "fuyang, kunshang", fmt.Sprintf("%s, %s", req.TxStationName, req.RxStationName), 1)
 
-	lines[7] = strings.Replace(lines[7], " 32.89", fmt.Sprintf("%.2f", req.TxStationLat), 1)
-	lines[7] = strings.Replace(lines[7], " 115.81", fmt.Sprintf("%.2f", req.TxStationLng), 1)
-	lines[7] = strings.Replace(lines[7], " 31.50", fmt.Sprintf("%.2f", req.RxStationLat), 1)
-	lines[7] = strings.Replace(lines[7], " 120.95", fmt.Sprintf("%.2f", req.RxStationLng), 1)
+	lines[7] = strings.Replace(lines[7], " 32.89", fmt.Sprintf(" %.2f", req.TxStationLat), 1)
+	lines[7] = strings.Replace(lines[7], " 115.81", fmt.Sprintf(" %.2f", req.TxStationLng), 1)
+	lines[7] = strings.Replace(lines[7], " 31.50", fmt.Sprintf(" %.2f", req.RxStationLat), 1)
+	lines[7] = strings.Replace(lines[7], " 120.95", fmt.Sprintf(" %.2f", req.RxStationLng), 1)
 
 	lines[8] = strings.Replace(lines[8], "135", fmt.Sprintf("%v", req.Noise), 1)
 	lines[8] = strings.Replace(lines[8], "90", fmt.Sprintf("%v", int(req.CircuitReliability*100)), 1)
@@ -260,4 +261,85 @@ func (s *LinkService) WriteLink2File(req *link.WriteLink2FileRequest) error {
 func (s *LinkService) CalculateLink() error {
 	cmd := exec.Command(utils.GetFilePath("C:\\MyVoacap\\myVOACAP\\CheckMate\\Win32\\MyVoacap.exe"))
 	return cmd.Err
+}
+
+// GetLinkResult 获取链路计算结果
+func (s *LinkService) GetLinkResult() ([]*link.CalculateResult, error) {
+	filePath := utils.GetFilePath("C:/MyVoacap/myVOACAP/run/voacapx.out")
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return nil, err
+	}
+	lines := strings.Split(string(content), "\n")
+	for i := range lines {
+		lines[i] = strings.TrimSpace(lines[i])
+	}
+
+	// 解析 LMT MUF LUF
+	lines1 := lines[41:65]
+	var transLink = make([]*link.CalculateResult, 0)
+	for _, line := range lines1 {
+		columns := strings.Fields(line)
+		if len(columns) >= 7 {
+			GMT, _ := strconv.ParseFloat(columns[0], 64)
+			LMT, _ := strconv.ParseFloat(columns[1], 64)
+			MUF, _ := strconv.ParseFloat(columns[5], 64)
+			LUF, _ := strconv.ParseFloat(columns[6], 64)
+			transLink = append(transLink, &link.CalculateResult{
+				GMT:  GMT,
+				LMT:  LMT,
+				MUF:  MUF,
+				LUF:  LUF,
+				DBU:  []float64{0.0, 0.0},
+				SDBW: []float64{0.0, 0.0},
+				SNR:  []float64{0.0, 0.0},
+			})
+		}
+	}
+
+	row := 66
+	for i := 0; i < 36; i++ {
+		lines2 := lines[row : row+54]
+
+		parseLine := func(line string, endIndex int) []float64 {
+			if i < 12 {
+				endIndex--
+			}
+			fields := strings.Fields(line)
+			fields = fields[1 : len(fields)+endIndex]
+			values := make([]float64, len(fields))
+			for i, field := range fields {
+				values[i], _ = strconv.ParseFloat(field, 64)
+			}
+			return values
+		}
+
+		getParsedValues := func(offset int) (float64, []float64, []float64, []float64) {
+			targetGMT, _ := strconv.ParseFloat(strings.Fields(lines2[offset])[0], 64)
+			DBU := parseLine(lines2[offset+7], -2)
+			SDBW := parseLine(lines2[offset+8], -3)
+			SNR := parseLine(lines2[offset+10], -2)
+			return targetGMT, DBU, SDBW, SNR
+		}
+
+		valuesArray := [2](func() (float64, []float64, []float64, []float64)){
+			func() (float64, []float64, []float64, []float64) { return getParsedValues(9) },
+			func() (float64, []float64, []float64, []float64) { return getParsedValues(32) },
+		}
+
+		for i := range transLink {
+			for _, getValues := range valuesArray {
+				targetGMT, DBU, SDBW, SNR := getValues()
+				if transLink[i].GMT == targetGMT {
+					transLink[i].DBU = append(transLink[i].DBU, DBU...)
+					transLink[i].SDBW = append(transLink[i].SDBW, SDBW...)
+					transLink[i].SNR = append(transLink[i].SNR, SNR...)
+				}
+			}
+		}
+
+		row += 55
+	}
+
+	return transLink, err
 }

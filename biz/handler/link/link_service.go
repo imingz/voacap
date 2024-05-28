@@ -134,10 +134,23 @@ func WriteLink2File(ctx context.Context, c *app.RequestContext) {
 	}
 
 	err = s.CalculateLink()
+	if err != nil {
+		resp := utils.BuildBaseResp(err)
+		c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
+			Code: resp.StatusCode,
+			Msg:  resp.StatusMsg,
+		})
+		return
+	}
+
+	transLink, err := s.GetLinkResult()
 
 	resp := utils.BuildBaseResp(err)
 	c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
-		Code: resp.StatusCode,
-		Msg:  resp.StatusMsg,
+		Code:         resp.StatusCode,
+		Msg:          resp.StatusMsg,
+		TransLink:    transLink,
+		InterferLink: []*link.CalculateResult{},
+		SIR:          []*link.SIR{},
 	})
 }
