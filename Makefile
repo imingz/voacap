@@ -6,7 +6,9 @@ ifeq ($(origin VERSION), undefined)
 VERSION := $(shell git describe --tags --always --match='v*')
 endif
 
-GO_LDFLAGS += -X $(VERSION_PACKAGE).GitVersion=$(VERSION)
+GO_LDFLAGS += \
+	-X $(VERSION_PACKAGE).GitVersion=$(VERSION) \
+	-X $(VERSION_PACKAGE).BuildDate=$(shell date +'%Y-%m-%dT%H:%M:%S%z')
 
 .PHONY: run
 run: build # 运行服务.
