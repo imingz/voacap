@@ -14,10 +14,6 @@ func (e ErrNo) Error() string {
 	return fmt.Sprintf("err_code=%d, err_msg=%s", e.ErrCode, e.ErrMsg)
 }
 
-func NewErrNo(code int32, msg string) ErrNo {
-	return ErrNo{code, msg}
-}
-
 func (e ErrNo) WithMessage(msg string) ErrNo {
 	e.ErrMsg = msg
 	return e
@@ -48,7 +44,7 @@ const (
 )
 
 var (
-	Success    = NewErrNo(SuccessCode, SuccessMsg)
-	ServiceErr = NewErrNo(ServiceErrCode, ServerErrMsg)
-	ParamErr   = NewErrNo(ParamErrCode, ParamErrMsg)
+	Success    = ErrNo{SuccessCode, SuccessMsg}
+	ServiceErr = ErrNo{ServiceErrCode, ServerErrMsg}
+	ParamErr   = ErrNo{ParamErrCode, ParamErrMsg}
 )
