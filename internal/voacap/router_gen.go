@@ -3,8 +3,9 @@
 package voacap
 
 import (
+	"voacap/internal/voacap/biz/router"
+
 	"github.com/cloudwego/hertz/pkg/app/server"
-	router "voacap/biz/router"
 )
 
 // register registers all routers.

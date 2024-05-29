@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	hlog.SetLevel(hlog.LevelInfo)
+	hlog.SetLevel(hlog.LevelDebug)
 
 	cmd.Execute()
 }

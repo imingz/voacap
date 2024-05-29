@@ -24,6 +24,9 @@ build-windows: tidy # 编译 windows 版本.
 tidy: # 自动添加/移除依赖包.
 	@go mod tidy
 
+.PHONY: hz_update
+hz_update: hz_update_antennas hz_update_station hz_update_link # 生成所有代码.
+
 .PHONY: hz_update_antennas
 hz_update_antennas: # 生成 antennas 代码.
 	hz update -idl idl/antennas.proto

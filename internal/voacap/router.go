@@ -3,7 +3,7 @@
 package voacap
 
 import (
-	handler "voacap/biz/handler"
+	"voacap/internal/voacap/biz/handler"
 
 	"github.com/cloudwego/hertz/pkg/app/server"
 )

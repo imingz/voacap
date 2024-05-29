@@ -2,7 +2,7 @@ package voacap
 
 import (
 	"time"
-	"voacap/biz/dal"
+	"voacap/internal/voacap/biz/dal"
 
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
