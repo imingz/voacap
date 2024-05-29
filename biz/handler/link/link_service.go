@@ -7,7 +7,7 @@ import (
 
 	link "voacap/biz/model/link"
 	service "voacap/biz/service/link"
-	"voacap/pkg/utils"
+	"voacap/internal/pkg/utils"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"

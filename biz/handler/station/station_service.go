@@ -7,7 +7,7 @@ import (
 
 	station "voacap/biz/model/station"
 	service "voacap/biz/service/station"
-	"voacap/pkg/utils"
+	"voacap/internal/pkg/utils"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"

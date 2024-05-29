@@ -12,7 +12,7 @@ import (
 	"voacap/biz/dal/db"
 	"voacap/biz/model/common"
 	"voacap/biz/model/link"
-	"voacap/pkg/utils"
+	"voacap/internal/pkg/utils"
 
 	"github.com/cloudwego/hertz/pkg/app"
 )

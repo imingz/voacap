@@ -7,7 +7,7 @@ import (
 
 	antennas "voacap/biz/model/antennas"
 	service "voacap/biz/service/antenna"
-	"voacap/pkg/utils"
+	"voacap/internal/pkg/utils"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
