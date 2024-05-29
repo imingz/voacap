@@ -8,6 +8,7 @@ import (
 	"voacap/internal/pkg/utils"
 	station "voacap/internal/voacap/biz/model/station"
 	service "voacap/internal/voacap/biz/service/station"
+	"voacap/pkg/errno"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -20,10 +21,10 @@ func GetStations(ctx context.Context, c *app.RequestContext) {
 	var req station.GetStationsRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, station.GetStationsResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -45,10 +46,10 @@ func AddStation(ctx context.Context, c *app.RequestContext) {
 	var req station.AddStationRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, station.AddStationResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -68,10 +69,10 @@ func UpdateStationById(ctx context.Context, c *app.RequestContext) {
 	var req station.UpdateStationByIdRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, station.UpdateStationByIdResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -91,10 +92,10 @@ func DeleteStationById(ctx context.Context, c *app.RequestContext) {
 	var req station.DeleteStationByIdRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, station.DeleteStationByIdResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}

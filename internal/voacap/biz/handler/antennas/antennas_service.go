@@ -8,6 +8,7 @@ import (
 	"voacap/internal/pkg/utils"
 	antennas "voacap/internal/voacap/biz/model/antennas"
 	service "voacap/internal/voacap/biz/service/antenna"
+	"voacap/pkg/errno"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -20,10 +21,10 @@ func GetAntennas(ctx context.Context, c *app.RequestContext) {
 	var req antennas.GetAntennasRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, antennas.GetAntennasResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -45,10 +46,10 @@ func AddAntenna(ctx context.Context, c *app.RequestContext) {
 	var req antennas.AddAntennaRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, antennas.AddAntennaResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -69,10 +70,10 @@ func UpdateAntennaById(ctx context.Context, c *app.RequestContext) {
 	var req antennas.UpdateAntennaByIdRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, antennas.UpdateAntennaByIdResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -93,10 +94,10 @@ func DeleteAntennaById(ctx context.Context, c *app.RequestContext) {
 	var req antennas.DeleteAntennaByIdRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, antennas.DeleteAntennaByIdResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}

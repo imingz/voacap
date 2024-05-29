@@ -7,6 +7,7 @@ import (
 	"voacap/internal/pkg/utils"
 	link "voacap/internal/voacap/biz/model/link"
 	service "voacap/internal/voacap/biz/service/link"
+	"voacap/pkg/errno"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -19,10 +20,10 @@ func GetLinks(ctx context.Context, c *app.RequestContext) {
 	var req link.GetLinksRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, link.GetLinksResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -44,10 +45,10 @@ func AddLink(ctx context.Context, c *app.RequestContext) {
 	var req link.AddLinkRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, link.AddLinkResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -67,10 +68,10 @@ func UpdateLinkById(ctx context.Context, c *app.RequestContext) {
 	var req link.UpdateLinkByIdRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, link.UpdateLinkByIdResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -90,10 +91,10 @@ func DeleteLinkById(ctx context.Context, c *app.RequestContext) {
 	var req link.DeleteLinkByIdRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, link.DeleteLinkByIdResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
@@ -113,10 +114,10 @@ func WriteLink2File(ctx context.Context, c *app.RequestContext) {
 	var req link.WriteLink2FileRequest
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		resp := utils.BuildBaseResp(err)
+		resp := errno.ParamErr.WithMessage(err.Error())
 		c.JSON(consts.StatusOK, link.WriteLink2FileResponse{
-			Code: resp.StatusCode,
-			Msg:  resp.StatusMsg,
+			Code: resp.ErrCode,
+			Msg:  resp.ErrMsg,
 		})
 		return
 	}
