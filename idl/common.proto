@@ -36,8 +36,8 @@ message SysConfig {
     double circuitReliability = 1;
     string coefficient = 2;
     string date = 3;
-    double noise = 4;
-    double SNR = 5;
+    double noise = 4[(api.vd) = "$ >= 100 && $ <= 150"];
+    double SNR = 5[(api.vd) = "$ >= 1 && $ <= 12"];
     int64 sunspotNum = 6;
     string timeType = 7;
 }
